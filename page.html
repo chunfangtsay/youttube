@@ -1,54 +1,21 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-<meta charset="UTF-8">
-<title>Auto Redirect Kiosk</title>
-
-<style>
-html, body {
-  margin: 0;
-  height: 100%;
-  background: black;
-  color: white;
-  font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-</style>
-</head>
-
-<body>
-<div id="msg">Loading...</div>
+<iframe id="viewer" width="100%" height="100%"></iframe>
 
 <script>
-// 🔧 在這裡放你的 webcam / 網站清單（最多24個）
-const sites = [
-"https://pgaskin.net/kepubify/try/",
-  "https://www.youtube.com/watch?v=61pi8UjLOlo",
-"https://clipperoil.com/webcams/american-samoa-webcam/",
-"https://www.youtube.com/watch?v=v7xySvhug0Y",
-"https://www.canberraairport.com.au/flights/flightcam", 
-  "https://worldcams.tv/taiwan/taoyuan/taiwan-taoyuan-airport",
-  "https://www.youtube.com/watch?v=wWEnxWA7nnY"
-
+const urls = [
+  "https://pgaskin.net/kepubify/try/",
+  "https://aopa.org/destinations/airports/PPG/details",
+  "https://www.youtube.com/watch?v=61pi8UjLOlo"
 ];
 
 let i = 0;
-const delay = 10000; // 每個網站停留時間（毫秒）
 
-function goNext() {
-  document.getElementById("msg").innerText = "Loading: " + sites[i];
-
-  setTimeout(() => {
-    window.location.href = sites[i];
-    i = (i + 1) % sites.length;
-  }, 500);
+function nextPage() {
+  i = (i + 1) % urls.length;
+  document.getElementById("viewer").src = urls[i];
 }
 
-goNext();
-setInterval(goNext, delay);
+window.onload = function () {
+  document.getElementById("viewer").src = urls[0];
+  setInterval(nextPage, 5000);
+};
 </script>
-
-</body>
-</html>
